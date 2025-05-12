@@ -7,7 +7,7 @@ var backpack_slots : Array = []
 enum ItemControlType {LOADOUT, COMBAT}
 @export var item_control_mode = ItemControlType.LOADOUT
 
-var interact_item : Node2D
+var interact_item : Item
 
 	
 
@@ -39,7 +39,8 @@ func _process(delta):
 		else:
 			# Do item de-equips
 			if(Input.is_action_just_pressed("equipment_1") and active_slots.get(0) != null):
-					dequip_slot(0)
+					#dequip_slot(0)
+					active_slots.get(0).fire()
 			if(Input.is_action_just_pressed("equipment_2") and active_slots.get(1) != null):
 					dequip_slot(1)
 			if(Input.is_action_just_pressed("equipment_3") and active_slots.get(2) != null):
@@ -48,6 +49,12 @@ func _process(delta):
 	elif(item_control_mode == ItemControlType.COMBAT):
 		
 		#Do use item input
+		if(Input.is_action_pressed("equipment_1") and active_slots.get(0) != null):
+				active_slots.get(0).fire()
+		if(Input.is_action_pressed("equipment_2") and active_slots.get(1) != null):
+				active_slots.get(1).fire()
+		if(Input.is_action_pressed("equipment_3") and active_slots.get(2) != null):
+				active_slots.get(2).fire()
 		pass
 
 func items_follow_slots():
@@ -61,6 +68,7 @@ func attempt_item_equip(slot:int):
 		if(active_slots.get(slot) != null):
 			return_item_to_shelf(active_slots.get(slot))
 		
+		#interact_item.item_wielder = %Player
 		add_item_to_active_slot(slot, interact_item)
 		update_inventory_display(slot)
 		return true
@@ -102,6 +110,7 @@ func return_item_to_shelf(item:Item):
 	pass
 	
 func dequip_slot(slot:int):
+	#active_slots.get(slot).item_wielder = null
 	return_item_to_shelf(active_slots.get(slot))
 	active_slots.set(slot, null)
 	update_inventory_display(slot)

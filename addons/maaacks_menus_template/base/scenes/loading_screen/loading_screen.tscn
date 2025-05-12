@@ -1,7 +1,49 @@
-[gd_scene load_steps=6 format=3 uid="uid://cd0jbh4metflb"]
+[gd_scene load_steps=7 format=3 uid="uid://cd0jbh4metflb"]
 
 [ext_resource type="Script" uid="uid://dgeewyjjpk4qn" path="res://addons/maaacks_menus_template/base/scenes/loading_screen/loading_screen.gd" id="1_gbk34"]
 [ext_resource type="Texture2D" uid="uid://dowigxwuyp4t1" path="res://backgrounds/ew.png" id="2_uqyf0"]
+[ext_resource type="AudioStream" uid="uid://dedcjnqv41upk" path="res://assets/audio/load_screen.ogg" id="3_0cgbe"]
+
+[sub_resource type="Animation" id="Animation_uidx2"]
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/BackgroundTextureRect:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.5),
+"transitions": PackedFloat32Array(3, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(10, 10)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/BackgroundTextureRect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3.5),
+"transitions": PackedFloat32Array(3, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-6400, -3600)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"set_animation_finished"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_53rj4"]
 resource_name = "loading_screen_animation"
@@ -43,47 +85,6 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(4, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(-6400, -3600)]
-}
-
-[sub_resource type="Animation" id="Animation_uidx2"]
-length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Control/BackgroundTextureRect:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2.9),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(10, 10)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Control/BackgroundTextureRect:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 2.9),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(-6400, -3600)]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(3),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"set_animation_finished"
-}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uidx2"]
@@ -178,7 +179,11 @@ autostart = true
 libraries = {
 &"": SubResource("AnimationLibrary_uidx2")
 }
-autoplay = "loading_screen_animation"
+autoplay = "RESET"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_0cgbe")
+autoplay = true
 
 [connection signal="confirmed" from="Control/ErrorMessage" to="." method="_on_error_message_confirmed"]
 [connection signal="canceled" from="Control/StalledMessage" to="." method="_on_confirmation_dialog_canceled"]

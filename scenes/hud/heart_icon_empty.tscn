@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dujigu65uu3we"]
+
+[ext_resource type="Texture2D" uid="uid://d1tvm8hghltjg" path="res://assets/icons/heart_empty.png" id="1_ivpvd"]
+
+[node name="hp_display_1" type="TextureRect"]
+size_flags_vertical = 0
+texture = ExtResource("1_ivpvd")
+stretch_mode = 2

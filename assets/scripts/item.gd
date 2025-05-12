@@ -5,6 +5,8 @@ extends Node2D
 var is_active = false
 @onready var area_2d = $Area2D
 
+#var item_wielder : CharacterBody2D
+
 
 func _process(delta):
 	pass

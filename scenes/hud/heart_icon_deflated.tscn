@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b33bjq6xwu5ab"]
+
+[ext_resource type="Texture2D" uid="uid://bgxy26le3bw4a" path="res://assets/icons/heart_deflated.png" id="1_i5i5e"]
+
+[node name="hp_display_2" type="TextureRect"]
+size_flags_vertical = 0
+texture = ExtResource("1_i5i5e")
+stretch_mode = 2
