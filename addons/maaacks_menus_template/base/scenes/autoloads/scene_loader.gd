@@ -17,6 +17,7 @@ var _loaded_resource : Resource
 var _background_loading : bool
 var _exit_hash : int = 3295764423
 
+
 func _check_scene_path() -> bool:
 	if _scene_path == null or _scene_path == "":
 		push_warning("scene path is empty")

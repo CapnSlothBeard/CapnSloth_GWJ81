@@ -1,0 +1,207 @@
+[gd_scene load_steps=26 format=3 uid="uid://b0njpuf5hsslk"]
+
+[ext_resource type="Script" uid="uid://cgrf8ofmuecbo" path="res://assets/scripts/player_control.gd" id="1_3s2qs"]
+[ext_resource type="Curve" uid="uid://85k7qkx63f68" path="res://resources/curves/move_curve.tres" id="2_5c0xi"]
+[ext_resource type="Curve" uid="uid://bk7i4xne1iq5b" path="res://resources/curves/jump_curve.tres" id="3_emvys"]
+[ext_resource type="Curve" uid="uid://bt20q7llu8rax" path="res://resources/curves/gravity_curve.tres" id="4_usxwy"]
+[ext_resource type="SpriteFrames" uid="uid://c82xy3cdo4jpf" path="res://resources/spriteframes/spriteframe_player.tres" id="5_m428a"]
+[ext_resource type="Script" uid="uid://dl42yxsjp6dow" path="res://assets/scripts/inventory.gd" id="6_dm52c"]
+[ext_resource type="Texture2D" uid="uid://d27qhtsmck3vw" path="res://assets/icons/icon_left_mouse.png" id="7_27i05"]
+[ext_resource type="Texture2D" uid="uid://dyu1dlklmhomd" path="res://assets/icons/icon_button_v.png" id="8_0sans"]
+[ext_resource type="Texture2D" uid="uid://dodoxt164mmy1" path="res://assets/icons/icon_right_mouse.png" id="9_hraf6"]
+[ext_resource type="Texture2D" uid="uid://dt3yjticq2q6f" path="res://assets/icons/icon_inventory_slot.png" id="10_um4jr"]
+[ext_resource type="AudioStream" uid="uid://cuie8g528ygds" path="res://assets/audio/Footsteps/step_wood_0.ogg" id="11_uv1th"]
+[ext_resource type="AudioStream" uid="uid://586luhrhigsk" path="res://assets/audio/Footsteps/step_wood_1.ogg" id="12_ag08j"]
+[ext_resource type="AudioStream" uid="uid://bvw2phjeuercn" path="res://assets/audio/Footsteps/step_wood_2.ogg" id="13_388a5"]
+[ext_resource type="AudioStream" uid="uid://cl7jh6ftytf2q" path="res://assets/audio/falling.ogg" id="14_vcd76"]
+[ext_resource type="AudioStream" uid="uid://dlne68ac4etcs" path="res://assets/audio/landing.ogg" id="15_fwpxu"]
+[ext_resource type="AudioStream" uid="uid://do7q0umojsn7t" path="res://assets/audio/swui.ogg" id="16_vsb32"]
+[ext_resource type="AudioStream" uid="uid://iruubu3k8ym0" path="res://assets/audio/player_hurt.ogg" id="17_757vt"]
+[ext_resource type="Texture2D" uid="uid://brmot7ti83m2r" path="res://assets/sprites/light.png" id="18_apsww"]
+[ext_resource type="Script" uid="uid://bi0a4upw7iuwp" path="res://assets/scripts/random_rotation_jitter.gd" id="19_hko3g"]
+[ext_resource type="Script" uid="uid://bj3ggkidqogud" path="res://assets/scripts/hp_bar.gd" id="20_iqado"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nin4m"]
+size = Vector2(10, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ajx13"]
+size = Vector2(19, 29)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ur8e2"]
+playback_mode = 1
+streams_count = 3
+stream_0/stream = ExtResource("11_uv1th")
+stream_1/stream = ExtResource("12_ag08j")
+stream_2/stream = ExtResource("13_388a5")
+
+[sub_resource type="Animation" id="Animation_4r3xk"]
+resource_name = "falling"
+length = 6.3
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a031v"]
+_data = {
+&"falling": SubResource("Animation_4r3xk")
+}
+
+[node name="Player" type="CharacterBody2D"]
+floor_stop_on_slope = false
+floor_constant_speed = true
+script = ExtResource("1_3s2qs")
+movespeed_curve = ExtResource("2_5c0xi")
+move_speed_mul = 2.0
+jump_curve = ExtResource("3_emvys")
+gravity_curve = ExtResource("4_usxwy")
+min_time_between_footstep_sounds = 0.4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 5
+sprite_frames = ExtResource("5_m428a")
+animation = &"idle"
+
+[node name="PlayerCollisionBox" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_nin4m")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+position_smoothing_enabled = true
+
+[node name="Inventory" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_dm52c")
+
+[node name="ItemSlot_0" type="Node2D" parent="Inventory"]
+unique_name_in_owner = true
+position = Vector2(-2, 9)
+
+[node name="ItemSlot_1" type="Node2D" parent="Inventory"]
+unique_name_in_owner = true
+position = Vector2(-11, -2)
+
+[node name="ItemSlot_2" type="Node2D" parent="Inventory"]
+unique_name_in_owner = true
+position = Vector2(0, -14)
+
+[node name="InventoryHUD" type="VBoxContainer" parent="Inventory"]
+unique_name_in_owner = true
+visible = false
+offset_left = -27.0
+offset_top = -52.0
+offset_right = 29.0
+offset_bottom = -12.0
+
+[node name="ItemPickupDisplay" type="HBoxContainer" parent="Inventory/InventoryHUD"]
+layout_mode = 2
+
+[node name="LMouse" type="TextureRect" parent="Inventory/InventoryHUD/ItemPickupDisplay"]
+layout_mode = 2
+texture = ExtResource("7_27i05")
+stretch_mode = 2
+
+[node name="VButton" type="TextureRect" parent="Inventory/InventoryHUD/ItemPickupDisplay"]
+layout_mode = 2
+texture = ExtResource("8_0sans")
+stretch_mode = 2
+
+[node name="RMouse" type="TextureRect" parent="Inventory/InventoryHUD/ItemPickupDisplay"]
+layout_mode = 2
+texture = ExtResource("9_hraf6")
+stretch_mode = 2
+
+[node name="InventoryDisplay" type="HBoxContainer" parent="Inventory/InventoryHUD"]
+layout_mode = 2
+
+[node name="Slot0" type="TextureRect" parent="Inventory/InventoryHUD/InventoryDisplay"]
+layout_mode = 2
+texture = ExtResource("10_um4jr")
+stretch_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Inventory/InventoryHUD/InventoryDisplay/Slot0"]
+layout_mode = 2
+offset_right = 16.0
+offset_bottom = 16.0
+stretch_mode = 2
+
+[node name="Slot1" type="TextureRect" parent="Inventory/InventoryHUD/InventoryDisplay"]
+layout_mode = 2
+texture = ExtResource("10_um4jr")
+stretch_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Inventory/InventoryHUD/InventoryDisplay/Slot1"]
+layout_mode = 2
+offset_right = 16.0
+offset_bottom = 16.0
+stretch_mode = 2
+
+[node name="Slot2" type="TextureRect" parent="Inventory/InventoryHUD/InventoryDisplay"]
+layout_mode = 2
+texture = ExtResource("10_um4jr")
+stretch_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Inventory/InventoryHUD/InventoryDisplay/Slot2"]
+layout_mode = 2
+offset_right = 16.0
+offset_bottom = 16.0
+stretch_mode = 2
+
+[node name="PlayerInteractBox" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerInteractBox"]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_ajx13")
+
+[node name="PlayerEars" type="AudioListener2D" parent="."]
+
+[node name="PlayerFootsteps" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_ur8e2")
+
+[node name="PlayerFallingSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_vcd76")
+
+[node name="PlayerLandingSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_fwpxu")
+volume_db = -8.0
+
+[node name="PlayerJumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_vsb32")
+volume_db = -4.0
+
+[node name="PlayerHurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("17_757vt")
+volume_db = 2.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_a031v")
+}
+
+[node name="PlayerLamp" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+color = Color(0.996078, 0.85098, 0.729412, 0.713726)
+energy = 0.3
+range_z_min = 0
+shadow_enabled = true
+texture = ExtResource("18_apsww")
+texture_scale = 2.0
+script = ExtResource("19_hko3g")
+frequency = 0.165
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HPBar" type="HBoxContainer" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 100.0
+offset_bottom = 32.0
+scale = Vector2(3, 3)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("20_iqado")
+
+[connection signal="area_entered" from="PlayerInteractBox" to="Inventory" method="_on_player_interact_box_area_entered"]
+[connection signal="area_exited" from="PlayerInteractBox" to="Inventory" method="_on_player_interact_box_area_exited"]

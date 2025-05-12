@@ -1,0 +1,11 @@
+[gd_resource type="AnimatedTexture" load_steps=3 format=3 uid="uid://cbi8bvc40hhhd"]
+
+[ext_resource type="Texture2D" uid="uid://cs7frxb2v4bf8" path="res://assets/icons/heart_0.png" id="1_dj035"]
+[ext_resource type="Texture2D" uid="uid://k328nake2f4c" path="res://assets/icons/heart_1.png" id="2_1bs7u"]
+
+[resource]
+frames = 2
+frame_0/texture = ExtResource("1_dj035")
+frame_0/duration = 0.2
+frame_1/texture = ExtResource("2_1bs7u")
+frame_1/duration = 0.2

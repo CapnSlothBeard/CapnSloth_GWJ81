@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dii5ii26042gh"]
+
+[ext_resource type="Script" uid="uid://bwrak17g4jpat" path="res://assets/scripts/items/bag_of_winds.gd" id="1_en3ka"]
+[ext_resource type="Texture2D" uid="uid://bgudkcalhqeo8" path="res://assets/sprites/Item_BagOfWinds.png" id="2_en3ka"]
+[ext_resource type="AudioStream" uid="uid://crb6beesue1fo" path="res://assets/audio/swoow.ogg" id="3_en3ka"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a28i3"]
+
+[node name="Item_BagOfWinds" type="Node2D"]
+script = ExtResource("1_en3ka")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_en3ka")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_a28i3")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_en3ka")

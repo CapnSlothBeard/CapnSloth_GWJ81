@@ -1,0 +1,75 @@
+[gd_scene load_steps=12 format=3 uid="uid://cmlyrisjbytpv"]
+
+[ext_resource type="Texture2D" uid="uid://376lq25fdme5" path="res://assets/sprites/projectile_blue.png" id="1_s5jtm"]
+[ext_resource type="Script" uid="uid://bcj1wyk4ihak5" path="res://assets/scripts/projectile.gd" id="1_wfeq5"]
+[ext_resource type="Texture2D" uid="uid://ppdx1k2hemg7" path="res://assets/sprites/particle_blue_2.png" id="3_niji2"]
+[ext_resource type="Script" uid="uid://nkckbb2mljxa" path="res://assets/scripts/particle_follow.gd" id="4_57pfn"]
+[ext_resource type="AudioStream" uid="uid://bmb3myt2hl4hd" path="res://assets/audio/bubble_trail.ogg" id="5_m1ll2"]
+[ext_resource type="AudioStream" uid="uid://bb08rx7rlkntq" path="res://assets/audio/bubble_pop.ogg" id="6_051ab"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wfeq5"]
+radius = 4.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_niji2"]
+atlas = ExtResource("1_s5jtm")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57pfn"]
+atlas = ExtResource("1_s5jtm")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m1ll2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_niji2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57pfn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_57pfn"]
+lifetime_randomness = 0.23
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+spread = 94.879
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 20, 0)
+
+[node name="ProjectileBlueStaff" type="Node2D"]
+script = ExtResource("1_wfeq5")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_wfeq5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_m1ll2")
+autoplay = "default"
+frame_progress = 0.630347
+
+[node name="BlueStaffParticles" type="GPUParticles2D" parent="."]
+position = Vector2(-2, 0)
+amount = 20
+texture = ExtResource("3_niji2")
+trail_lifetime = 0.01
+trail_sections = 2
+trail_section_subdivisions = 1
+process_material = SubResource("ParticleProcessMaterial_57pfn")
+script = ExtResource("4_57pfn")
+
+[node name="TravelSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_m1ll2")
+
+[node name="PopSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_051ab")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

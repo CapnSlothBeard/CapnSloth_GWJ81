@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://clikv40rpcm6p"]
+
+[ext_resource type="Texture2D" uid="uid://cbi8bvc40hhhd" path="res://resources/animated_textures/hp_hearts.tres" id="1_67uao"]
+
+[node name="hp_display_0" type="TextureRect"]
+size_flags_vertical = 0
+texture = ExtResource("1_67uao")
+stretch_mode = 2

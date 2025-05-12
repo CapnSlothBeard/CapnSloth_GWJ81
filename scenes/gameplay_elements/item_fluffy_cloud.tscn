@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjrkddpmx3cj"]
+
+[ext_resource type="Script" uid="uid://c8n3p5ak4b247" path="res://assets/scripts/items/fluffy_cloud.gd" id="1_j7bw4"]
+[ext_resource type="Texture2D" uid="uid://bc60qrejb8ia1" path="res://assets/sprites/Item_FluffyCloud.png" id="2_rp4kw"]
+
+[sub_resource type="Curve" id="Curve_w0qrb"]
+_limits = [0.0, 400.0, 0.0, 30.0]
+_data = [Vector2(0, 0), 0.0, 3.80606, 0, 0, Vector2(30, 50), 6.02207, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a28i3"]
+
+[node name="Item_FluffyCloud" type="Node2D"]
+script = ExtResource("1_j7bw4")
+gravity_curve = SubResource("Curve_w0qrb")
+shelf_position = Vector2(112, -38)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_rp4kw")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_a28i3")
