@@ -7,6 +7,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a28i3"]
 
 [node name="Item_BagOfWinds" type="Node2D"]
+z_index = 4
 script = ExtResource("1_en3ka")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

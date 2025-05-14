@@ -23,7 +23,7 @@ func _wake():
 	state = states.WALK
 	$AnimationPlayer.play("idle")
 
-func _process(delta):
+func _process_enemy(delta):
 	
 	for vel in velocity_additions:
 		velocity += vel
@@ -33,11 +33,11 @@ func _process(delta):
 	if(attack_time < attack_cooldown): attack_time += delta
 	if(player_in_danger):
 		if(attack_time >= attack_cooldown):
-			%Player.take_damage(1, self)
+			Player.take_damage(1, self)
 			attack_time = 0.0
 
 func _physics_process(delta):
-	dir_towards_player =  (%Player.global_position - global_position).normalized()
+	dir_towards_player =  (Player.global_position - global_position).normalized()
 	
 	
 	# Gravity
@@ -46,7 +46,7 @@ func _physics_process(delta):
 	
 	if(state == states.WALK):
 		velocity.x = dir_towards_player.x * move_speed
-		var dist_to_player = global_position.distance_to(%Player.global_position)
+		var dist_to_player = global_position.distance_to(Player.global_position)
 		
 		# Do dash prep
 		if(dash_cooldown_progress > 0):

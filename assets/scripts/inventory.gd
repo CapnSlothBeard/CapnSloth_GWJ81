@@ -15,11 +15,13 @@ func _on_player_interact_box_area_entered(area):
 	#print("Entered item area of: " + str(get_node(area.get_path()).get_parent().name))
 	print("Entered item area of: " + str(area.get_parent().name))
 	%InventoryHUD.visible = true
+	item_control_mode = ItemControlType.LOADOUT
 	interact_item = area.get_parent()
 
 
 func _on_player_interact_box_area_exited(area):
 	%InventoryHUD.visible = false
+	item_control_mode = ItemControlType.COMBAT
 	interact_item = null
 
 
@@ -39,8 +41,8 @@ func _process(delta):
 		else:
 			# Do item de-equips
 			if(Input.is_action_just_pressed("equipment_1") and active_slots.get(0) != null):
-					#dequip_slot(0)
-					active_slots.get(0).fire()
+					dequip_slot(0)
+					#active_slots.get(0).fire()
 			if(Input.is_action_just_pressed("equipment_2") and active_slots.get(1) != null):
 					dequip_slot(1)
 			if(Input.is_action_just_pressed("equipment_3") and active_slots.get(2) != null):
@@ -96,6 +98,7 @@ func add_item_to_active_slot(slot:int, item:Item):
 	active_slots.set(slot, item)
 	item.equip()
 	item.is_active = true
+	item.reparent(self)
 	interact_item = null
 	%InventoryHUD.visible = false
 	pass
@@ -106,6 +109,8 @@ func add_item_to_backpack(item:Item):
 func return_item_to_shelf(item:Item):
 	item.dequip()
 	item.is_active = false
+	# Set parent to current scene
+	item.reparent(get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1)) 
 	item.position = item.shelf_position
 	pass
 	

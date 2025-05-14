@@ -20,8 +20,11 @@ var released_jump = true
 var gravity_progress = 0.0
 
 @export var knockback_speed : float = 500.0
-@export var knockback_duration : float = 0.1
+@export var knockback_duration : float = 0.2
 var knockback_time :float = 1.0
+
+@export var damage_invulnerability_duration : float = 0.3
+var invulnerability_time : float = 0.2
 
 var velocity_multipliers : Dictionary = {}
 var velocity_additions : Dictionary = {}
@@ -56,6 +59,12 @@ func _process(delta):
 		if(knockback_time >= knockback_duration):
 			velocity_additions.erase("knockback")
 	#print(velocity.y)
+	
+	#Do i-frame countdown
+	if(invulnerability_time < damage_invulnerability_duration):
+		invulnerability_time += delta
+		if(invulnerability_time >= damage_invulnerability_duration):
+			end_damage_flash()
 	
 	if(is_on_floor()):
 		animation_player.stop()
@@ -109,18 +118,7 @@ func _process(delta):
 			time_before_next_footstep = min_time_between_footstep_sounds
 	else:
 		velocity.x = 0.0
-	#if(Input.is_action_pressed("move_right")):
-		#print(movespeed_curve.sample(abs(velocity.x) + 1))
 	
-	
-	#if(Input.is_action_pressed("move_left")):
-		#velocity.x = -movespeed_curve.sample(abs(velocity.x) + delta) * game_speed * move_speed_mul
-		#print(velocity.x)
-	#
-	#if(Input.is_action_pressed("move_right")):
-		#velocity.x = movespeed_curve.sample(abs(velocity.x) + delta) * game_speed * move_speed_mul
-		#print(velocity.x)
-		#
 	
 	# Play falling animation if falling.
 	if(velocity.y > 0):
@@ -141,20 +139,40 @@ func _process(delta):
 #func update_health_display():
 	#%HPBar.update_display()
 
-func take_damage(amount:int, damage_causer:Node2D):
+func take_damage(amount:int, damage_causer:Node2D, knockback_mul:float = 1.0):
+	# Cancel damage if invulnerable
+	if(invulnerability_time < damage_invulnerability_duration): return
 	#print("Damage")
+	start_damage_flash()
 	$PlayerHurtSound.play()
 	%HPBar.damage_hearts(amount)
-	take_knockback(damage_causer.global_position)
+	take_knockback(damage_causer.global_position, knockback_mul)
+	invulnerability_time = 0.0
 	if(%HPBar.full_hearts <= 0):
 		hp_is_zero()
 		
 func hp_is_zero():
 	print("ded")
 	
-func take_knockback(fromPos:Vector2):
+func take_knockback(fromPos:Vector2, knockback_mul : float = 1.0):
 	var dir = (global_position - fromPos).normalized()
 	dir.y -= 0.25
 	dir = dir.normalized()
-	velocity_additions.set("knockback", dir * knockback_speed)
+	velocity_additions.set("knockback", dir * knockback_speed * knockback_mul)
 	knockback_time = 0.0
+
+
+func start_damage_flash():
+	for s in get_sprites():
+		s.modulate = Color(1,0,0)
+			
+func end_damage_flash():
+	for s in get_sprites():
+		s.modulate = Color(1,1,1)
+	
+func get_sprites():
+	var sprites : Array = []
+	for child in get_children():
+		if(child is Sprite2D or child is AnimatedSprite2D):
+			sprites.append(child)
+	return sprites

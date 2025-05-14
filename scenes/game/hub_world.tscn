@@ -1,146 +1,15 @@
-[gd_scene load_steps=21 format=4 uid="uid://wyk42ym8uspg"]
+[gd_scene load_steps=9 format=4 uid="uid://wyk42ym8uspg"]
 
 [ext_resource type="TileSet" uid="uid://dtnbuqss4qrd4" path="res://resources/tilesets/tileset_hubworld.tres" id="1_0yk2g"]
 [ext_resource type="Script" uid="uid://8f4745ces4b1" path="res://assets/scripts/world.gd" id="1_4ww0q"]
-[ext_resource type="PackedScene" uid="uid://b0njpuf5hsslk" path="res://scenes/gameplay_elements/player.tscn" id="3_o2kjb"]
 [ext_resource type="Texture2D" uid="uid://br3ry21vppxw1" path="res://backgrounds/HubWorldBakcground.png" id="7_0kx61"]
-[ext_resource type="PackedScene" uid="uid://b3nt4i5bufvxh" path="res://scenes/gameplay_elements/item_blue_staff.tscn" id="21_4r3xk"]
-[ext_resource type="PackedScene" uid="uid://dii5ii26042gh" path="res://scenes/gameplay_elements/item_bag_of_winds.tscn" id="22_4r3xk"]
-[ext_resource type="PackedScene" uid="uid://bjrkddpmx3cj" path="res://scenes/gameplay_elements/item_fluffy_cloud.tscn" id="24_ur8e2"]
-[ext_resource type="Script" uid="uid://cjgvkyhptb2sf" path="res://assets/scripts/enemies/whitecell.gd" id="25_lrq5f"]
-[ext_resource type="Texture2D" uid="uid://s5u4h7hj8sgq" path="res://assets/sprites/Enemy_WhiteCell.png" id="25_qfmpi"]
+[ext_resource type="PackedScene" uid="uid://ctlndlbrt5vn8" path="res://scenes/gameplay_elements/player_spawnpoint.tscn" id="9_o2kjb"]
+[ext_resource type="PackedScene" uid="uid://b3nt4i5bufvxh" path="res://scenes/gameplay_elements/items/item_blue_staff.tscn" id="21_4r3xk"]
+[ext_resource type="PackedScene" uid="uid://dii5ii26042gh" path="res://scenes/gameplay_elements/items/item_bag_of_winds.tscn" id="22_4r3xk"]
+[ext_resource type="PackedScene" uid="uid://bjrkddpmx3cj" path="res://scenes/gameplay_elements/items/item_fluffy_cloud.tscn" id="24_ur8e2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ww0q"]
 size = Vector2(4228, 660)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_lrq5f"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tc8wk"]
-atlas = ExtResource("25_qfmpi")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_n8lby"]
-atlas = ExtResource("25_qfmpi")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ba863"]
-atlas = ExtResource("25_qfmpi")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_5lpr8"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tc8wk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n8lby")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ba863")
-}],
-"loop": true,
-"name": &"roll",
-"speed": 5.0
-}]
-
-[sub_resource type="Animation" id="Animation_lrq5f"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"default"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="Animation" id="Animation_tc8wk"]
-resource_name = "idle"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"default"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="Animation" id="Animation_qfmpi"]
-resource_name = "roll"
-length = 0.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 6.28319]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:animation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"roll"]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_n8lby"]
-_data = {
-&"RESET": SubResource("Animation_lrq5f"),
-&"idle": SubResource("Animation_tc8wk"),
-&"roll": SubResource("Animation_qfmpi")
-}
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_tc8wk"]
-radius = 13.0
 
 [node name="HubWorld" type="Node2D"]
 script = ExtResource("1_4ww0q")
@@ -153,10 +22,6 @@ tile_set = ExtResource("1_0yk2g")
 [node name="Decor" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAAHAAAAAQACAAEAAAAJAP3/AQADAAAAAAAFAP//AQADAAEAAAD+/wAAAQAAAAIAAAD//wAAAQABAAIAAAD///7/AQACAAAAAAD+//7/AQACAAAAAAADAP//AQACAAAAAAAIAP//AQACAAIAAAAHAP//AQACAAIAAAABAP//AQACAAIAAAA=")
 tile_set = ExtResource("1_0yk2g")
-
-[node name="Player" parent="." instance=ExtResource("3_o2kjb")]
-unique_name_in_owner = true
-position = Vector2(36, 1)
 
 [node name="HubWorldBakcground" type="Sprite2D" parent="."]
 z_index = -1
@@ -171,7 +36,8 @@ position = Vector2(-23, 5)
 position = Vector2(112, -38)
 
 [node name="Item_BagOfWinds" parent="." instance=ExtResource("22_4r3xk")]
-position = Vector2(144, 23)
+position = Vector2(-17, -71)
+shelf_position = Vector2(-17, 71)
 
 [node name="StartRunDoor" type="Area2D" parent="."]
 position = Vector2(411, 106)
@@ -180,32 +46,9 @@ position = Vector2(411, 106)
 position = Vector2(17, 428)
 shape = SubResource("RectangleShape2D_4ww0q")
 
-[node name="Enemy_White" type="CharacterBody2D" parent="."]
-collision_layer = 4
-collision_mask = 4
-script = ExtResource("25_lrq5f")
-dash_activation_distance_from_player = 256.0
-move_speed = 40.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy_White"]
-position = Vector2(0, 4)
-shape = SubResource("CircleShape2D_lrq5f")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemy_White"]
-sprite_frames = SubResource("SpriteFrames_5lpr8")
-autoplay = "default"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Enemy_White"]
-libraries = {
-&"": SubResource("AnimationLibrary_n8lby")
-}
-
-[node name="DamageArea" type="Area2D" parent="Enemy_White"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy_White/DamageArea"]
-shape = SubResource("CircleShape2D_tc8wk")
-debug_color = Color(0.822952, 0.0550532, 0.179494, 0.42)
+[node name="Player_Spawnpoint" parent="." instance=ExtResource("9_o2kjb")]
+unique_name_in_owner = true
+position = Vector2(194, 0)
+spawn_with_item_control_mode = 0
 
 [connection signal="body_entered" from="StartRunDoor" to="." method="_on_start_run_door_body_entered"]
-[connection signal="body_entered" from="Enemy_White/DamageArea" to="Enemy_White" method="_on_damage_area_body_entered"]
-[connection signal="body_exited" from="Enemy_White/DamageArea" to="Enemy_White" method="_on_damage_area_body_exited"]

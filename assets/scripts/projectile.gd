@@ -1,9 +1,11 @@
 extends Node2D
 
-@export var damage : int = 1
+@export var damage : int = 5
 var velocity : Vector2 = Vector2.ZERO
 @onready var blue_staff_particles = $BlueStaffParticles
 @onready var pop_sound = $PopSound
+@export var belongs_to_player : bool = false
+@export var knockback_multiplier : float = 1.0
 
 @export var lifetime : float = 5.0
 
@@ -25,8 +27,18 @@ func _process(delta):
 
 func hit_something(body):
 	#If enemy do damage
+	if(belongs_to_player):
+		if(body is Enemy):
+			body.take_damage(damage, self, knockback_multiplier)
+			pop_projectile()
+	else:
+		if(body is Player):
+			Player.take_damage(damage, self, knockback_multiplier)
+			pop_projectile()
+		elif(not body is Enemy):
+			pop_projectile()
 	#print("hit")
-	pop_projectile()
+	
 	
 
 func _on_area_2d_body_entered(body):

@@ -1,0 +1,66 @@
+[gd_scene load_steps=11 format=3 uid="uid://xgurh4btl2wb"]
+
+[ext_resource type="Script" uid="uid://ds33os1b1sn5t" path="res://scenes/gameplay_elements/enemies/enemy_wall.gd" id="1_cfduh"]
+[ext_resource type="Texture2D" uid="uid://blmpe7afl7ehk" path="res://assets/sprites/Enemy_Wall.png" id="1_r6cns"]
+[ext_resource type="Texture2D" uid="uid://dnhw3olnrpwwt" path="res://assets/sprites/Enemy_Wall_Eye.png" id="3_w5ec2"]
+[ext_resource type="Texture2D" uid="uid://c7xr88xcmxm35" path="res://assets/sprites/Enemy_Pupil.png" id="4_gq7nm"]
+[ext_resource type="AudioStream" uid="uid://c6onsnwt4dac8" path="res://assets/audio/bubble_pop_2.ogg" id="5_w5ec2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cfduh"]
+size = Vector2(20, 94)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_cfduh"]
+polygon = PackedVector2Array(-3, -48, 4, -48, 0, -11, 6, 16, 8, 48, -2, 48, 2, 35, -4, 21, -7, 1, -7, -15, -6, -33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_83tlf"]
+atlas = ExtResource("3_w5ec2")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0536c"]
+atlas = ExtResource("3_w5ec2")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2r1b0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_83tlf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0536c")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="BreakableWall" type="CharacterBody2D"]
+z_index = 4
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("1_cfduh")
+max_hp = 30
+move_speed = 0.0
+damage_flash_duration = 0.2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cfduh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_r6cns")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprite2D"]
+occluder = SubResource("OccluderPolygon2D_cfduh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-3, 0)
+sprite_frames = SubResource("SpriteFrames_2r1b0")
+
+[node name="PupilPivotPoint" type="Node2D" parent="AnimatedSprite2D"]
+position = Vector2(1, -2)
+
+[node name="Pupil" type="Sprite2D" parent="AnimatedSprite2D/PupilPivotPoint"]
+texture = ExtResource("4_gq7nm")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_w5ec2")

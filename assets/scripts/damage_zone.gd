@@ -5,4 +5,4 @@ extends Area2D
 
 func _on_body_entered(body):
 	if(body.name == "Player"):
-		%Player.take_damage(damage_amount)
+		Player.take_damage(damage_amount, self)

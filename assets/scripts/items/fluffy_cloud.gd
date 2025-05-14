@@ -21,7 +21,7 @@ func _on_fire():
 
 func _on_equip():
 	print("derp fluffy cloud derp on_equip")
-	%Player.gravity_curve = gravity_curve
+	Player.gravity_curve = gravity_curve
 	
 func _on_dequip():
-	%Player.gravity_curve = default_curve
+	Player.gravity_curve = default_curve

@@ -11,6 +11,7 @@ point_count = 2
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a28i3"]
 
 [node name="Item_FluffyCloud" type="Node2D"]
+z_index = 4
 script = ExtResource("1_j7bw4")
 gravity_curve = SubResource("Curve_w0qrb")
 shelf_position = Vector2(112, -38)

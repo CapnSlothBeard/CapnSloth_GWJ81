@@ -44,6 +44,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 5
 floor_stop_on_slope = false
 floor_constant_speed = true
 script = ExtResource("1_3s2qs")
@@ -54,7 +55,6 @@ gravity_curve = ExtResource("4_usxwy")
 min_time_between_footstep_sounds = 0.4
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-z_index = 5
 sprite_frames = ExtResource("5_m428a")
 animation = &"idle"
 
@@ -182,7 +182,7 @@ libraries = {
 [node name="PlayerLamp" type="PointLight2D" parent="."]
 unique_name_in_owner = true
 color = Color(0.996078, 0.85098, 0.729412, 0.713726)
-energy = 0.3
+energy = 0.6
 range_z_min = 0
 shadow_enabled = true
 texture = ExtResource("18_apsww")

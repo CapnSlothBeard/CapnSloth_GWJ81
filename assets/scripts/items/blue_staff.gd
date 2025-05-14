@@ -16,8 +16,8 @@ func _on_fire():
 		#print("pew pew")
 		
 		var projectile = PROJECTILE_BLUE_STAFF.instantiate()
-		projectile.global_position = %Player.global_position
-		var dir:Vector2 = get_global_mouse_position() - %Player.global_position
+		projectile.global_position = Player.global_position
+		var dir:Vector2 = get_global_mouse_position() - Player.global_position
 		dir = dir.normalized()
 		projectile.velocity = dir * projectile_speed
 		$/root.add_child(projectile)
